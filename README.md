@@ -22,6 +22,9 @@ curl:
 curl --location --globoff 'http://127.0.0.1:8000/api/v1/products?offset=0&limit=10&attributeLimit=10&attribute_offset=0&pricingLimit=10&pricing_offset=0&filter[region]=singapore' \
 --header 'Accept: application/json'
 
+## Live Endpoint
+    https://min-test-assignment-main-x72qxh.laravel.cloud/api/v1/products
+
 ## Reponse JSON Example
 Below is the response of API
 
