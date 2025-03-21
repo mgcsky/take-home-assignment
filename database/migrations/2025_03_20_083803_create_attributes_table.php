@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("production_id");
+            $table->bigInteger("product_id");
             $table->bigInteger("attribute_value_id");
             $table->timestamps();
         });
