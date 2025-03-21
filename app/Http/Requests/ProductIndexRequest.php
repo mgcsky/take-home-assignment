@@ -27,6 +27,7 @@ class ProductIndexRequest extends FormRequest
             'attribute_offset' => 'integer',
             'pricing_offset' => 'integer',
             'child_limit' => 'integer',
+            'filter' => 'array',
         ];
     }
 
@@ -38,6 +39,7 @@ class ProductIndexRequest extends FormRequest
             'attribute_offset.integer' => 'attribute_offset is integer.',
             'pricing_offset.integer' => 'pricing_offset is integer.',
             'child_limit.integer' => 'child_limit is integer.',
+            'filter.array' => 'child_limit is array.',
         ];
     }
 }

@@ -4,5 +4,5 @@ namespace App\Repository\Production;
 
 interface ProductInterface
 {
-    public function list(int $offset = 0, int $limit = 10, int $attributeOffset = 0, int $pricingOffset = 0, int $childLimit = 10);
+    public function list(int $offset, int $limit, int $attributeOffset, int $attributeLimit, int $pricingOffset, int $pricingLimit, $filter);
 }

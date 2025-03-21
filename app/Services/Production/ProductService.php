@@ -3,7 +3,6 @@
 namespace App\Services\Production;
 
 use App\Http\Resources\ProductList;
-use App\Models\Product;
 use App\Repository\Production\ProductInterface;
 
 class ProductService
@@ -15,9 +14,9 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function getList(int $offset = 0, int $limit = 10, int $attributeOffset = 0, int $pricingOffset = 0, int $childLimit = 10)
+    public function getList(int $offset = 0, int $limit = 10, int $attributeOffset = 0, int $attributeLimit = 10, int $pricingOffset = 0, int $pricingLimit = 10, $filter = [])
     {
-        $products = $this->productRepository->list($offset, $limit, $attributeOffset = 0, $pricingOffset = 0, $childLimit = 10);
+        $products = $this->productRepository->list($offset, $limit, $attributeOffset, $attributeLimit, $pricingOffset, $pricingLimit, $filter);
 
         return ProductList::collection($products);
     }

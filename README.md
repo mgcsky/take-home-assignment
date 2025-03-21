@@ -19,8 +19,7 @@ For this scenario, I choosing repository pattern to implement, So the controller
 - the API should be ready at endpoint: {host}/api/v1/products
 
 curl:
-
-curl --location 'http://127.0.0.1:8000/api/v1/products?offset=0&limit=10&attribute_offset=0&pricing_offset=0&child_limit=10' \
+curl --location --globoff 'http://127.0.0.1:8000/api/v1/products?offset=0&limit=10&attributeLimit=10&attribute_offset=0&pricingLimit=10&pricing_offset=0&filter[region]=singapore' \
 --header 'Accept: application/json'
 
 ## Reponse JSON Example
