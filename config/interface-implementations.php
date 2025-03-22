@@ -4,6 +4,6 @@ return [
     'Attribute\AttributeInterface' => 'Attribute\AttributeRepository',
     'AttributeValue\AttributeValueInterface' => 'AttributeValue\AttributeValueRepository',
     'Production\ProductInterface' => 'Production\ProductRepository',
-    'ProductionPricing\ProductionPricingInterface' => 'ProductionPricing\ProductionPricingRepository',
+    'RentalPeriod\RentalPeriodInterface' => 'RentalPeriod\RentalPeriodRepository',
     'Regions\RegionsInterface' => 'Regions\RegionsRepository',
 ];

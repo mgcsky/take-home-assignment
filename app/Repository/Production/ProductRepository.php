@@ -6,32 +6,44 @@ use App\Models\Product;
 
 class ProductRepository implements ProductInterface
 {
-    public function list(int $offset = 0, int $limit = 10, int $attributeOffset = 0, int $attributeLimit = 10, int $pricingOffset = 0, int $pricingLimit = 10, $filter = [])
+    public function list(array $pagination = [], array $filter = [])
     {
         $regionFilter = data_get($filter, 'region', null);
         $rentalPeriodFilter = data_get($filter, 'rental_period', null);
 
-        return Product::whereHas('productPricing.region', function ($query) use ($regionFilter) {
-                $regionFilter && $query->where('name', $regionFilter);
-            })
-            ->whereHas('productPricing.rentalPeriod', function ($query) use ($rentalPeriodFilter) {
-                $rentalPeriodFilter && $query->where('duration', $rentalPeriodFilter);
-            })
-            ->with([
-                'attributesValue' => function ($query) use ($attributeOffset, $attributeLimit) {
-                    $query->limit($attributeLimit)->offset($attributeOffset);
+        $limit = data_get($pagination, 'limit', 10);
+        $offset = data_get($pagination, 'offset', 0);
+
+        $query = Product::with([
+                'attributesValue' => function ($query) use ($pagination) {        
+                    if (!is_null(data_get($pagination, 'attribute'))) {
+                        $query->limit(data_get($pagination, 'attribute.limit'))
+                            ->offset(data_get($pagination, 'attribute.offset'));
+                    }
                 },
-                'productPricing'  => function ($query) use ($pricingOffset, $pricingLimit) {
-                    $query->limit($pricingLimit)->offset($pricingOffset);
+                'productPricing'  => function ($query) use ($pagination) {
+                    if (!is_null(data_get($pagination, 'pricing'))) {
+                        $query->limit(data_get($pagination, 'pricing.limit'))
+                            ->offset(data_get($pagination, 'pricing.offset'));
+                    }
                 },
-                'productPricing.region' => function ($query) use ($pricingOffset, $pricingLimit) {
-                    $query->limit($pricingLimit)->offset($pricingOffset);
-                },
-                'productPricing.rentalPeriod' => function ($query) use ($pricingOffset, $pricingLimit) {
-                    $query->limit($pricingLimit)->offset($pricingOffset);
-                },
-            ])
-            ->limit($limit)
+                'productPricing.region',
+                'productPricing.rentalPeriod',
+            ]);
+
+            if (!is_null($regionFilter)) {
+                $query->whereHas('productPricing.region', function ($query) use ($regionFilter) {
+                    $query->where('name', $regionFilter);
+                });
+            }
+
+            if (!is_null($rentalPeriodFilter)) {
+                $query->whereHas('productPricing.rentalPeriod', function ($query) use ($rentalPeriodFilter) {
+                    $query->where('duration', $rentalPeriodFilter);
+                });
+            }
+
+        return $query->limit($limit)
             ->offset($offset)
             ->get();
     }

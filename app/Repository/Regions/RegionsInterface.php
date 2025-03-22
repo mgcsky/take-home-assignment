@@ -4,5 +4,5 @@ namespace App\Repository\Regions;
 
 interface RegionsInterface
 {
-    public function list();
+    public function findByName(string $name);
 }

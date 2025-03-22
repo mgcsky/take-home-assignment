@@ -14,9 +14,17 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function getList(int $offset = 0, int $limit = 10, int $attributeOffset = 0, int $attributeLimit = 10, int $pricingOffset = 0, int $pricingLimit = 10, $filter = [])
+    /**
+     * Products Listing
+     *
+     * @param array $pagination
+     * @param array $filter
+     * 
+     * @return Illuminate\Http\Resources\Json\JsonResource
+     */
+    public function getList(array $pagination = [], array $filter = [])
     {
-        $products = $this->productRepository->list($offset, $limit, $attributeOffset, $attributeLimit, $pricingOffset, $pricingLimit, $filter);
+        $products = $this->productRepository->list($pagination, $filter);
 
         return ProductList::collection($products);
     }
