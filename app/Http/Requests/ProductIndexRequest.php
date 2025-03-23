@@ -22,24 +22,28 @@ class ProductIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'offset' => 'integer',
-            'limit' => 'integer',
-            'attribute_offset' => 'integer',
-            'pricing_offset' => 'integer',
-            'child_limit' => 'integer',
+            'pagination.offset' => 'integer',
+            'pagination.limit' => 'integer',
+            'pagination.attribute.offset' => 'integer',
+            'pagination.attribute.limit' => 'integer',
+            'pagination.pricing.offset' => 'integer',
+            'pagination.pricing.limit' => 'integer',
             'filter' => 'array',
+            'pagination' => 'array',
         ];
     }
 
     public function messages()
     {
         return [
-            'offset.integer' => 'offset is integer.',
-            'limit.integer' => 'limit is integer.',
-            'attribute_offset.integer' => 'attribute_offset is integer.',
-            'pricing_offset.integer' => 'pricing_offset is integer.',
-            'child_limit.integer' => 'child_limit is integer.',
-            'filter.array' => 'child_limit is array.',
+            'pagination.offset.integer' => 'offset is integer.',
+            'pagination.limit.integer' => 'limit is integer.',
+            'pagination.attribute.offset.integer' => 'attribute offset is integer.',
+            'pagination.attribute.limit.integer' => 'attribute limit is integer.',
+            'pagination.pricing.offset.integer' => 'attribute offset is integer.',
+            'pagination.pricing.limit.integer' => 'attribute limit is integer.',
+            'filter.array' => 'filter is array.',
+            'pagination.array' => 'pagination is array.',
         ];
     }
 }
