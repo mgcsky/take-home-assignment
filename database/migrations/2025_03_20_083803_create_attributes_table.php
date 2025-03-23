@@ -16,6 +16,8 @@ return new class extends Migration
             $table->bigInteger("product_id");
             $table->bigInteger("attribute_value_id");
             $table->timestamps();
+
+            $table->index(["product_id", "attribute_value_id"]);
         });
     }
 
