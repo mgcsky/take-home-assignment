@@ -15,6 +15,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string("name");
             $table->timestamps();
+
+            $table->index("name");
         });
     }
 

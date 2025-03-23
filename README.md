@@ -10,6 +10,8 @@ After checking the requirements, I started creating this schema.
 ## Code Base
 For this scenario, I choosing repository pattern to implement, So the controller will be the communicate center, it's calling service to do somethings. With each service, I will handle the logic and calling repository to handle DB interaction. Repository then calling Model to do query, insert, update ,etc...
 
+To add new Repository, you can add one interface and one repository on App/Repository/[sub folder] folder. Then go to config/interface-implementations for declaration, then it will be binding in side the AppServiceProvider and ready to be use
+
 ## Testing
 
 - setup .env file
@@ -19,8 +21,16 @@ For this scenario, I choosing repository pattern to implement, So the controller
 - the API should be ready at endpoint: {host}/api/v1/products
 
 curl:
-curl --location --globoff 'http://127.0.0.1:8000/api/v1/products?offset=0&limit=10&attributeLimit=10&attribute_offset=0&pricingLimit=10&pricing_offset=0&filter[region]=singapore' \
+For listing API please using below endpoint
+curl --location --globoff 'https://min-test-assignment-main-x72qxh.laravel.cloud/api/v1/products?pagination[offset]=0&pagination[limit]=10&pagination[attribute][offset]=0&pagination[attribute][limit]=10&pagination[pricing][offset]=0&pagination[pricing][limit]=10&filter[region]=singapore' \
 --header 'Accept: application/json'
+
+For product count please using this one
+curl --location --globoff 'https://min-test-assignment-main-x72qxh.laravel.cloud/api/v1/products/count?filter[region]=Malaysia' \
+--header 'Accept: application/json'
+
+## Live Endpoint
+    https://min-test-assignment-main-x72qxh.laravel.cloud/api/v1/products
 
 ## Reponse JSON Example
 Below is the response of API
@@ -34,6 +44,7 @@ Below is the response of API
             "description": "product description",
             "sku": "prd-01",
             "remark": "test product 01",
+            "attributes_total": 2,
             "attributes": [
                 {
                     "id": 1,
@@ -48,28 +59,24 @@ Below is the response of API
                     "scope": "mobile"
                 }
             ],
-            "pricing": {
-                "Singapore": [
-                    {
-                        "rental_period": 12,
-                        "price": 357
-                    },
-                    {
-                        "rental_period": 3,
-                        "price": 368
-                    }
-                ],
-                "Malaysia": [
-                    {
-                        "rental_period": 3,
-                        "price": 371
-                    },
-                    {
-                        "rental_period": 6,
-                        "price": 376
-                    }
-                ]
-            }
+            "pricing": [
+                {
+                    "price": 300,
+                    "rental_period": 12,
+                    "country_name": "Malaysia"
+                },
+                {
+                    "price": 341,
+                    "rental_period": 6,
+                    "country_name": "Malaysia"
+                },
+                {
+                    "price": 302,
+                    "rental_period": 12,
+                    "country_name": "Singapore"
+                },
+            ],
+            "pricing_total": 3
         }
     ],
     "success": {
@@ -77,3 +84,9 @@ Below is the response of API
     }
 }
 ```
+
+## Unit Test
+Please update DB_CONNECTION and DB_DATABASE to test env before running the below command for the unit test
+`php artisan test`
+
+For the unit test, I'm currently using Pest PHP and fast starting to handle it.

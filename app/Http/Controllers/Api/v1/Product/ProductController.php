@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\v1\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductIndexRequest;
-use App\Services\Production\ProductService;
+use App\Http\Requests\ProductCountRequest;
+use App\Service\Product\ProductService;
 
 class ProductController extends Controller
 {
@@ -15,18 +16,34 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
+    /**
+     * Products Listing
+     *
+     * @param ProductIndexRequest $request
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index(ProductIndexRequest $request)
     {
-        $offset = $request->has('offset') ? $request->offset : 0;
-        $limit = $request->has('limit') ? $request->limit : 10;
-        $attributeOffset = $request->has('attribute_offset') ? $request->attribute_offset : 0;
-        $attributeLimit = $request->has('attribute_limit') ? $request->attribute_limit : 10;
-        $pricingOffset = $request->has('pricing_offset') ? $request->pricing_offset : 0;
-        $pricingLimit = $request->has('pricing_limit') ? $request->pricing_limit : 10;
-
+        $pagination = $request->pagination ?? [];
         $filter = $request->filter ?? [];
 
-        $data = $this->productService->getList($offset, $limit, $attributeOffset, $attributeLimit, $pricingOffset, $pricingLimit, $filter);
+        $data = $this->productService->getList($pagination, $filter);
+        return $this->respond($data, 200, "Production return successfully");
+    }
+
+    /**
+     * Products Count
+     *
+     * @param ProductCountRequest $request
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function count(ProductCountRequest $request)
+    {
+        $filter = $request->filter ?? [];
+
+        $data = $this->productService->getListTotal($filter);
         return $this->respond($data, 200, "Production return successfully");
     }
 }

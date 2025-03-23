@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedInteger("rental_period_id");
             $table->double("price")->default(0);
             $table->timestamps();
+
+            $table->index(["product_id", "region_id", "rental_period_id"]);
         });
     }
 

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string("sku");
             $table->string("remark")->nullable();
             $table->timestamps();
+
+            $table->index(["sku", "name"]);
         });
     }
 

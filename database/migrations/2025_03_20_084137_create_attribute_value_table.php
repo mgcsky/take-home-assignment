@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string("value")->nullable();
             $table->string("scope")->nullable();
             $table->timestamps();
+            
+            $table->index(["name", "value"]);
         });
     }
 
