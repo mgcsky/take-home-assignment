@@ -7,7 +7,7 @@ use App\Models\ProductPricing;
 use App\Models\Region;
 use App\Models\RentalPeriod;
 
-describe('Product List', function () {
+describe('Product', function () {
     beforeEach(function () {
         $this->product = Product::create([
             'name' => 'product01',
@@ -45,36 +45,54 @@ describe('Product List', function () {
 
     });
 
-    test('returns a successful response', function () {
-        $this->get("/api/v1/products")
-            ->assertOk();
-    });
+    describe('List', function () {
+        test('returns a successful response', function () {
+            $this->get("/api/v1/products")
+                ->assertOk();
+        });
 
-    test('returns a successful response with pagination', function () {
-        $this->get("/api/v1/products", [
-            "pagination" => [
-                "limit" => 10,
-                "offset" => 0,
-                "attribute" => [
+        test('returns a successful response with pagination', function () {
+            $this->get("/api/v1/products", [
+                "pagination" => [
                     "limit" => 10,
                     "offset" => 0,
-                ],
-                "pricing" => [
-                    "limit" => 10,
-                    "offset" => 0,
+                    "attribute" => [
+                        "limit" => 10,
+                        "offset" => 0,
+                    ],
+                    "pricing" => [
+                        "limit" => 10,
+                        "offset" => 0,
+                    ]
                 ]
-            ]
-        ])
-            ->assertOk();
-    });
+            ])
+                ->assertOk();
+        });
 
-    test('returns a successful response with filter', function () {
-        $this->get("/api/v1/products", [
-            "filter" => [
-                "region" => 'Singapore',
-                "duration" => 3,
-            ],
-        ])
-            ->assertOk();
+        test('returns a successful response with filter', function () {
+            $this->get("/api/v1/products", [
+                "filter" => [
+                    "region" => 'Singapore',
+                    "duration" => 3,
+                ],
+            ])
+                ->assertOk();
+        });
+    });
+    describe('Count', function () {
+        test('returns a successful response', function () {
+            $this->get("/api/v1/products/count")
+                ->assertOk();
+        });
+
+        test('returns a successful response with filter', function () {
+            $this->get("/api/v1/products/count", [
+                "filter" => [
+                    "region" => 'Singapore',
+                    "duration" => 3,
+                ],
+            ])
+                ->assertOk();
+        });
     });
 });
