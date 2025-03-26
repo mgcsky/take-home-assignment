@@ -5,7 +5,7 @@ Hi team, so below is my solution and instruction to test the code
 After checking the requirements, I started creating this schema.
     - So the idea is to take the product at the center of the relations, for the attribute, I'll save the actual result on attribute value, so the attribute is basically a many-to-many table then we can achieve reuse attribute on multiple products.
     - For the product pricing, since we have product, region, and rental period as the criteria for the price, I'm using the Product_pricing table for holding price with keys from Products, Regions and Rental Period table.
-![image](https://github.com/user-attachments/assets/e4c93aa2-2cbe-4b1b-bfb2-9887b0781394)
+![image](https://github.com/user-attachments/assets/0004ad69-8597-4421-a8c6-7cc50b3a6f90)
 
 ## Code Base
 For this scenario, I choosing repository pattern to implement, So the controller will be the communicate center, it's calling service to do somethings. With each service, I will handle the logic and calling repository to handle DB interaction. Repository then calling Model to do query, insert, update ,etc...
